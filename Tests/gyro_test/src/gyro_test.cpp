@@ -1,3 +1,4 @@
+#include "Arduino.h"
 #include "Wire.h" // Importieren der I2C Bibliothek.
 const int I2C_adress_MPU = 0x68; // I2C Adresse des MPU6050.
 int16_t Beschleunigung_x, Beschleunigung_y, Beschleunigung_z;

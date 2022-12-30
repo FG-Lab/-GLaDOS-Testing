@@ -1,31 +1,18 @@
+#include <Arduino.h>
+
+
+// Vom Rejk dazu gemacht da espSerial nicht definiert schien
+#include <SoftwareSerial.h>
+SoftwareSerial espSerial(2, 3);
+// Ende von Code den Rejk hinzugefügt hat
+
 //-------------VirtuinoCM  Library and settings --------------
-#include "VirtuinoCM.h"
+#include <VirtuinoCM.h>
 VirtuinoCM virtuino;               
 #define V_memory_count 32          // the size of V memory. You can change it to a number <=255)
 float V[V_memory_count];           // This array is synchronized with Virtuino V memory. You can change the type to int, long etc.
 
 boolean debug = true;              // set this variable to false on the finale code to decrease the request time.
-
-void setup() {
-  if (debug) {
-    Serial.begin(9600);
-    while (!Serial) continue; //kontrtrole: Wartet bis die SerialPorts2/3 mit dem Bluetoth Modul verbunden sind 
-  }
-  espSerial.begin(9600);  
-  espSerial.setTimeout(50);
-
-  virtuino.begin(onReceived,onRequested,256);  //Start Virtuino. Set the buffer to 256. With this buffer Virtuino can control about 28 pins (1 command = 9bytes) The T(text) commands with 20 characters need 20+6 bytes        
-  //Ein PMW port ist ein Port an dem der Spannung durch schnellen an und aus schalten von 0V (Wert=0) bis 5V(Wert=255) Variert werden kann  
-}
-
-void loop() {
-  // put your main code here, to run repeatedly:
-
-
-}
-
-
-
 
 //============================================================== onCommandReceived
 //==============================================================
@@ -48,6 +35,25 @@ String onRequested(char variableType, uint8_t variableIndex){
   }
   return "";
 }
+
+void setup() {
+  if (debug) {
+    Serial.begin(9600);
+    while (!Serial) continue; //kontrtrole: Wartet bis die SerialPorts2/3 mit dem Bluetoth Modul verbunden sind 
+  }
+  espSerial.begin(9600);  
+  espSerial.setTimeout(50);
+
+  virtuino.begin(onReceived,onRequested,256);  //Start Virtuino. Set the buffer to 256. With this buffer Virtuino can control about 28 pins (1 command = 9bytes) The T(text) commands with 20 characters need 20+6 bytes        
+  //Ein PMW port ist ein Port an dem der Spannung durch schnellen an und aus schalten von 0V (Wert=0) bis 5V(Wert=255) Variert werden kann  
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
+
+}
+
 
 //============================================================== virtuinoRun
   void virtuinoRun(){
