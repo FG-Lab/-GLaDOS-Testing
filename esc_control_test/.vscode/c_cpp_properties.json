@@ -1,0 +1,58 @@
+//
+// !!! WARNING !!! AUTO-GENERATED FILE!
+// PLEASE DO NOT MODIFY IT AND USE "platformio.ini":
+// https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags
+//
+{
+    "configurations": [
+        {
+            "name": "PlatformIO",
+            "includePath": [
+                "/home/afeef/Desktop/Quadcopter/GLaDOS-Testing/esc_control_test/include",
+                "/home/afeef/Desktop/Quadcopter/GLaDOS-Testing/esc_control_test/src",
+                "/home/afeef/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                "/home/afeef/Desktop/Quadcopter/GLaDOS-Testing/esc_control_test/.pio/libdeps/uno/Servo/src",
+                "/home/afeef/.platformio/packages/framework-arduino-avr/cores/arduino",
+                "/home/afeef/.platformio/packages/framework-arduino-avr/variants/standard",
+                "/home/afeef/.platformio/packages/framework-arduino-avr/libraries/HID/src",
+                "/home/afeef/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                "/home/afeef/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                "/home/afeef/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                ""
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "/home/afeef/Desktop/Quadcopter/GLaDOS-Testing/esc_control_test/include",
+                    "/home/afeef/Desktop/Quadcopter/GLaDOS-Testing/esc_control_test/src",
+                    "/home/afeef/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                    "/home/afeef/Desktop/Quadcopter/GLaDOS-Testing/esc_control_test/.pio/libdeps/uno/Servo/src",
+                    "/home/afeef/.platformio/packages/framework-arduino-avr/cores/arduino",
+                    "/home/afeef/.platformio/packages/framework-arduino-avr/variants/standard",
+                    "/home/afeef/.platformio/packages/framework-arduino-avr/libraries/HID/src",
+                    "/home/afeef/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                    "/home/afeef/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                    "/home/afeef/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                    ""
+                ]
+            },
+            "defines": [
+                "PLATFORMIO=60105",
+                "ARDUINO_AVR_UNO",
+                "F_CPU=16000000L",
+                "ARDUINO_ARCH_AVR",
+                "ARDUINO=10808",
+                "__AVR_ATmega328P__",
+                ""
+            ],
+            "cStandard": "c11",
+            "cppStandard": "c++11",
+            "compilerPath": "/home/afeef/.platformio/packages/toolchain-atmelavr/bin/avr-gcc",
+            "compilerArgs": [
+                "-mmcu=atmega328p",
+                ""
+            ]
+        }
+    ],
+    "version": 4
+}

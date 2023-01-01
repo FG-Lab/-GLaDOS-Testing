@@ -3,11 +3,11 @@
 #include <EEPROM.h>
 
 Servo ESC;
-int maxSpeed = 0;
+int maxSpeed;
 
 void setup() {
   Serial.begin(9600);
-  ESC.attach(9, 0, 60);
+  ESC.attach(9, 0, 180);
   pinMode(2, INPUT);
   pinMode(13, OUTPUT);
 
@@ -35,7 +35,7 @@ void loop() {
         currentSpeed = newSpeed;
       }
   }
- 
+  
   ESC.write(currentSpeed);
   Serial.print((currentSpeed / 180) * 100);
   Serial.println("%");
