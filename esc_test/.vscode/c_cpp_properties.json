@@ -10,10 +10,10 @@
             "includePath": [
                 "/home/afeef/Desktop/Quadcopter/GLaDOS-Testing/esc_test/include",
                 "/home/afeef/Desktop/Quadcopter/GLaDOS-Testing/esc_test/src",
+                "/home/afeef/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
                 "/home/afeef/Desktop/Quadcopter/GLaDOS-Testing/esc_test/.pio/libdeps/uno/Servo/src",
                 "/home/afeef/.platformio/packages/framework-arduino-avr/cores/arduino",
                 "/home/afeef/.platformio/packages/framework-arduino-avr/variants/standard",
-                "/home/afeef/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
                 "/home/afeef/.platformio/packages/framework-arduino-avr/libraries/HID/src",
                 "/home/afeef/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
                 "/home/afeef/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
@@ -25,10 +25,10 @@
                 "path": [
                     "/home/afeef/Desktop/Quadcopter/GLaDOS-Testing/esc_test/include",
                     "/home/afeef/Desktop/Quadcopter/GLaDOS-Testing/esc_test/src",
+                    "/home/afeef/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
                     "/home/afeef/Desktop/Quadcopter/GLaDOS-Testing/esc_test/.pio/libdeps/uno/Servo/src",
                     "/home/afeef/.platformio/packages/framework-arduino-avr/cores/arduino",
                     "/home/afeef/.platformio/packages/framework-arduino-avr/variants/standard",
-                    "/home/afeef/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
                     "/home/afeef/.platformio/packages/framework-arduino-avr/libraries/HID/src",
                     "/home/afeef/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
                     "/home/afeef/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",

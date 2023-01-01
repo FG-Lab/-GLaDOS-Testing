@@ -24,11 +24,11 @@ void loop() {
   } 
 
   newSpeed = map(analogRead(0), 0, 1023, 0, maxSpeed);
-  if(newSpeed - currentSpeed > 3){
+  if(newSpeed - currentSpeed > 1){
     Serial.println("Jump too big!");
     currentSpeed += 0.5;
   } else{
-      if(currentSpeed - newSpeed > 3){
+      if(currentSpeed - newSpeed > 1){
         Serial.println("Jump too big!");
         currentSpeed -= 0.5;
       } else{
@@ -62,8 +62,8 @@ int esc_calibration(){
   digitalWrite(13, LOW);
   delay(2500);
   if(maxSpeed-4 >= 0){
-    EEPROM.write(0, maxSpeed-4);
-    return maxSpeed-4;
+    EEPROM.write(0, maxSpeed-8);
+    return maxSpeed-8;
   }
   return maxSpeed;
 }
