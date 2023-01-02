@@ -9,6 +9,16 @@
 
 // Input used for calibrating the motors
 char input;
+/*
+MOTOR CONTROLS:
+Motor1: 1-up, q-down
+Motor2: 2-up, w-down
+Motor3: 3-up, e-down
+Motor4: 4-up, r-down
+All Motors: 5-up, t-down, 0-RESET to 0
+
+EMERGENCY STOP: SPACE
+*/
 
 // The Electronic Speed Controllers
 Servo ESC1;
@@ -16,7 +26,7 @@ Servo ESC2;
 Servo ESC3;
 Servo ESC4;
 
-// Max-values for the motors speed
+// (Max-)values for the motors speed
 int max_1 = 0;
 int max_2 = 0;
 int max_3 = 0;
@@ -52,48 +62,69 @@ void loop() {
 }
 
 void input_active(char i){
-  if(i == '1'){
+  if(i == ' '){
+    max_1 = 0;
+    max_2 = 0;
+    max_3 = 0;
+    max_4 = 0;
+    while(1){
+      ESC1.write(0);
+      ESC2.write(0);
+      ESC3.write(0);
+      ESC4.write(0);
+    }
+  }
+  if(i = '0'){
+    max_1 = 0;
+    max_2 = 0;
+    max_3 = 0;
+    max_4 = 0;
+    return;
+  }
+  if(i == '1' or i == '5'){
     if(max_1 < 180){
       max_1++;
     }
   }
-  if(i == 'q'){
+  if(i == 'q' or i == 't'){
     if(max_1 > 0){
       max_1--;
     }
   }
-  if(i == '2'){
+  if(i == '2' or i == '5'){
     if(max_2 < 180){
       max_2++;
     }
   }
-  if(i == 'w'){
+  if(i == 'w' or i == 't'){
     if(max_2 > 0){
       max_2--;
     }
   }
-  if(i == '3'){
+  if(i == '3' or i == '5'){
     if(max_3 < 180){
       max_3++;
     }
   }
-  if(i == 'e'){
+  if(i == 'e' or i == 't'){
     if(max_3 > 0){
       max_3--;
     }
   }
-  if(i == '4'){
+  if(i == '4' or i == '5'){
     if(max_4 < 180){
       max_4++;
     }
   }
-  if(i == 'r'){
+  if(i == 'r' or i == 't'){
     if(max_4 > 0){
       max_4--;
     }
   }
 }
 
+
+// IGNORE // IGNORE // IGNORE
 /*
 void accelerate(Servo ESC, int& currentSpeed, int){
   if(newSpeed - currentSpeed > 1){
