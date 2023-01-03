@@ -1,7 +1,22 @@
 #include <Arduino.h>
 #include <Servo.h>
+//#include <EEPROM.h>
+#include <Gldr.h>
 
-/*/////////////////////////////////////////////////////////
+#define ESC1_PIN 11
+#define ESC2_PIN 10
+#define ESC3_PIN 9
+#define ESC4_PIN 6
+
+// BUGGED AS HELL: DO NOT USE THIS GARBAGE CODE!!!
+
+auto joystick = gldr::JoystickReceiver();
+auto gyro = gldr::GyroReceiver();
+auto remote = gldr::RemoteReceiver(4, 3, joystick, gyro);
+
+// Input used for calibrating the motors
+char input;
+/*
 MOTOR CONTROLS:
 Motor1: 1-up, q-down
 Motor2: 2-up, w-down
@@ -10,68 +25,97 @@ Motor4: 4-up, r-down
 All Motors: 5-up, t-down, 0-RESET to 0
 
 EMERGENCY STOP: SPACE
-To exit the emergency mode, you must reset tha Arduino!
-*//////////////////////////////////////////////////////////
+*/
 
-// Input used for calibrating the motors
-char input;
-
-// The Electronic Speed Controllers and their Pins
+// The Electronic Speed Controllers
 Servo ESC1;
 Servo ESC2;
 Servo ESC3;
 Servo ESC4;
-#define ESC1_PIN 11
-#define ESC2_PIN 10
-#define ESC3_PIN 9
-#define ESC4_PIN 6
 
-// Values for the motors speed
-int speed_1 = 0;
-int speed_2 = 0;
-int speed_3 = 0;
-int speed_4 = 0;
+int max_speed = 180;
+// (Max-)values for the motors speed
+int max_1 = 0;
+int max_2 = 0;
+int max_3 = 0;
+int max_4 = 0;
+
 
 void setup() {
 	Serial.begin(9600); 
-  // Setup motors with above pins and full-throttle range
 	ESC1.attach(ESC1_PIN, 0, 180);
   ESC2.attach(ESC2_PIN, 0, 180);
   ESC3.attach(ESC3_PIN, 0, 180);
   ESC4.attach(ESC4_PIN, 0, 180);
 }
 
+int base_speed ;
+int boost_speed;
+int boost_multiplier;
+double current_speed;
+double new_speed;
 void loop() {
+  remote.update();
+  boost_multiplier = remote.joystick_y();
+  base_speed = map(analogRead(0), 0, 1023, 0, max_speed);
+  
+  if(boost_multiplier >= 0){
+    boost_speed = max_speed - base_speed;
+  } else{
+    boost_speed = base_speed;
+  }
+  new_speed = base_speed;
+
+
+  if(new_speed - current_speed > 1){
+    Serial.println("Jump too big!");
+    current_speed += 0.5;
+  } else{
+      if(current_speed - new_speed > 1){
+        Serial.println("Jump too big!");
+        current_speed -= 0.5;
+      } else{
+        current_speed = new_speed;
+      }
+  }
+  ESC1.write(current_speed);
+  ESC2.write(current_speed);
+  ESC3.write(current_speed);
+  ESC4.write(current_speed);
+  //tone(6, map(long(remote.joystick_x()*100), -100, 100, 31, 4978), 5);
+
+  Serial.print(current_speed);
+  Serial.print("  ");
+  Serial.println();
+
+  /*
 	if(Serial.available()){
-    // Read and react to input
 		input_active(Serial.read());
-    // Print out updated values
     Serial.print("Speed 1: ");
-    Serial.println(speed_1);
+    Serial.println(max_1);
     Serial.print("Speed 2: ");
-    Serial.println(speed_2);
+    Serial.println(max_2);
     Serial.print("Speed 3: ");
-    Serial.println(speed_3);
+    Serial.println(max_3);
     Serial.print("Speed 4: ");
-    Serial.println(speed_4);
+    Serial.println(max_4);
     Serial.println();
     Serial.println("//////////////");
     Serial.println();
 	}
-  // Set the motors to the new speed values
-  ESC1.write(speed_1);
-  ESC2.write(speed_2);
-  ESC3.write(speed_3);
-  ESC4.write(speed_4);
+  ESC1.write(max_1);
+  ESC2.write(max_2);
+  ESC3.write(max_3);
+  ESC4.write(max_4);
+  */
 }
 
 void input_active(char i){
-  // Most efficient input-reaction code in this world
   if(i == ' '){
-    speed_1 = 0;
-    speed_2 = 0;
-    speed_3 = 0;
-    speed_4 = 0;
+    max_1 = 0;
+    max_2 = 0;
+    max_3 = 0;
+    max_4 = 0;
     while(1){
       ESC1.write(0);
       ESC2.write(0);
@@ -80,51 +124,51 @@ void input_active(char i){
     }
   }
   if(i == '0'){
-    speed_1 = 0;
-    speed_2 = 0;
-    speed_3 = 0;
-    speed_4 = 0;
+    max_1 = 0;
+    max_2 = 0;
+    max_3 = 0;
+    max_4 = 0;
     return;
   }
   
   if(i == '1' or i == '5'){
-    if(speed_1 < 180){
-      speed_1++;
+    if(max_1 < 180){
+      max_1++;
     }
   }
   if(i == 'q' or i == 't' or i == 'T'){
-    if(speed_1 > 0){
-      speed_1--;
+    if(max_1 > 0){
+      max_1--;
     }
   }
   if(i == '2' or i == '5'){
-    if(speed_2 < 180){
-      speed_2++;
+    if(max_2 < 180){
+      max_2++;
     }
   }
   if(i == 'w' or i == 't' or i == 'T'){
-    if(speed_2 > 0){
-      speed_2--;
+    if(max_2 > 0){
+      max_2--;
     }
   }
   if(i == '3' or i == '5'){
-    if(speed_3 < 180){
-      speed_3++;
+    if(max_3 < 180){
+      max_3++;
     }
   }
   if(i == 'e' or i == 't' or i =='T'){
-    if(speed_3 > 0){
-      speed_3--;
+    if(max_3 > 0){
+      max_3--;
     }
   }
   if(i == '4' or i == '5'){
-    if(speed_4 < 180){
-      speed_4++;
+    if(max_4 < 180){
+      max_4++;
     }
   }
   if(i == 'r' or i == 't' or i == 'T'){
-    if(speed_4 > 0){
-      speed_4--;
+    if(max_4 > 0){
+      max_4--;
     }
   }
 }
